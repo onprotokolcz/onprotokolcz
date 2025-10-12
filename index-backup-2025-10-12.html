@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ON PROTOCOL — landing</title>
+  <meta name="description" content="ON PROTOCOL — transparentní launch ekosystému na Solaně." />
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg2:#0d1426;
+      --card:#111a2e;
+      --txt:#e9f0ff;
+      --muted:#a9b4cc;
+      --brand:#5aa9ff;
+      --brand2:#8b7bff;
+      --ring: rgba(90,169,255,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial;
+      color:var(--txt); background: radial-gradient(1200px 600px at 50% -10%, #16233d 0%, var(--bg) 60%), var(--bg2);
+      overflow-x:hidden;
+    }
+    /* jemné vlnky */
+    .waves::before,.waves::after{
+      content:""; position:absolute; left:-10%; right:-10%; height:260px; pointer-events:none;
+      background:
+       radial-gradient(1200px 120px at 50% 50%, rgba(90,169,255,.08) 0 35%, transparent 40%),
+       radial-gradient(1200px 120px at 40% 50%, rgba(139,123,255,.08) 0 35%, transparent 40%);
+      filter: blur(1px);
+      mask-image: radial-gradient(50% 100% at 50% 0, rgba(0,0,0,.9), transparent);
+    }
+    .waves::before{ top:52% }
+    .waves::after{ bottom:6%; transform:scaleX(-1) }
+
+    header{
+      max-width:1100px; margin:0 auto; padding:22px 20px; display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+    }
+    /* Logo power + text */
+    .brand{ display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--txt)}
+    .brand .power{
+      width:46px; height:46px; border-radius:999px; display:grid; place-items:center;
+      background: radial-gradient(60% 60% at 50% 45%, rgba(93,170,255,.16), transparent 70%);
+      box-shadow: 0 0 0 1px rgba(138,157,255,.15), 0 0 16px 6px rgba(92,138,255,.08);
+      position:relative;
+    }
+    .brand .power::after{
+      content:""; position:absolute; inset:0; border-radius:inherit;
+      box-shadow: 0 0 40px 8px rgba(93,170,255,.22), inset 0 0 22px rgba(93,170,255,.18);
+      pointer-events:none;
+    }
+    .brand svg{ width:20px; height:20px; stroke:#79b7ff; }
+    .brand h1{ margin:0; font-weight:800; letter-spacing:.04em; font-size:20px; }
+    .brand h1 .muted{ opacity:.75; font-weight:700 }
+
+    /* language switcher — stejná velikost a glow jako logo */
+    .head-right{ display:flex; align-items:center; gap:10px; }
+    .lang{ display:flex; align-items:center; gap:6px; position:relative; }
+    .lang button{
+      width:46px; height:46px; border-radius:999px; display:grid; place-items:center;
+      background: radial-gradient(60% 60% at 50% 45%, rgba(93,170,255,.16), transparent 70%);
+      color:var(--txt);
+      border:1px solid rgba(138,157,255,.15);
+      box-shadow: 0 0 16px 6px rgba(92,138,255,.08);
+      position:relative; cursor:pointer; font-weight:800; letter-spacing:.03em; text-transform:uppercase;
+      padding:0;
+      transition: box-shadow .2s ease, border-color .2s ease, transform .15s ease;
+    }
+    .lang button::after{
+      content:""; position:absolute; inset:0; border-radius:inherit;
+      box-shadow: 0 0 40px 8px rgba(93,170,255,.22), inset 0 0 22px rgba(93,170,255,.18);
+      pointer-events:none;
+    }
+    .lang button:hover{ transform:translateY(-1px); border-color:rgba(138,157,255,.25) }
+    .lang button .code{ font-size:.9rem; }
+
+    .lang-list{
+      position:absolute; right:0; top:58px; background:#0f1a31; border:1px solid rgba(129,150,255,.22);
+      border-radius:14px; overflow:hidden; display:none; min-width:180px; z-index:40;
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+    }
+    .lang.open .lang-list{ display:block }
+    .lang-item{
+      display:flex; align-items:center; gap:10px; padding:10px 12px; cursor:pointer;
+      color:var(--txt); text-decoration:none; border-bottom:1px solid rgba(129,150,255,.08);
+    }
+    .lang-item:last-child{ border-bottom:none }
+    .flag{ font-size:18px; width:22px; text-align:center }
+
+    /* social icons in header */
+    .socials{
+      display:flex; align-items:center; gap:10px;
+    }
+    .social{
+      width:46px; height:46px; border-radius:999px; display:grid; place-items:center;
+      background:#0f1a31; color:var(--txt); text-decoration:none;
+      border:1px solid rgba(129,150,255,.22);
+      box-shadow: 0 0 16px 6px rgba(92,138,255,.08);
+      transition:.15s transform, .15s border-color, .15s box-shadow;
+    }
+    .social:hover{ transform:translateY(-1px); border-color:rgba(129,150,255,.38); box-shadow:0 10px 28px rgba(0,0,0,.32) }
+    .social svg{ width:18px; height:18px; }
+
+    main{ max-width:980px; margin:40px auto 100px; padding:0 20px; text-align:center; position:relative }
+    .hero h2{ font-size:64px; margin:24px 0 6px; letter-spacing:.02em; text-shadow:0 10px 25px rgba(0,0,0,.35) }
+    .hero p{ color:var(--muted); margin:0 0 26px }
+
+    .btns{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:36px }
+    .btn{
+      background:#0f1a31; color:var(--txt); border:1px solid rgba(129,150,255,.22); border-radius:14px;
+      padding:10px 16px; font-weight:700; cursor:pointer; text-decoration:none;
+      transition:.15s transform, .15s box-shadow, .15s border-color;
+    }
+    .btn:hover{ transform:translateY(-1px); border-color:rgba(129,150,255,.38); box-shadow:0 8px 28px rgba(0,0,0,.32) }
+
+    .notice{
+      margin:0 auto; max-width:820px; background:linear-gradient(180deg, #0f1a31, #0c162b);
+      border:1px solid rgba(129,150,255,.22); border-radius:16px; padding:22px 22px 18px; text-align:left;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35), inset 0 0 60px rgba(98,142,255,.05);
+    }
+    .notice h3{ margin:0 0 8px; font-size:20px }
+    .notice p{ margin:0; color:var(--muted) }
+
+    /* panels: ethics + communication */
+    .panel{
+      margin: 18px auto 0; max-width:820px;
+      background:linear-gradient(180deg, #0f1a31, #0c162b);
+      border:1px solid rgba(129,150,255,.22); border-radius:16px; padding:22px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35), inset 0 0 60px rgba(98,142,255,.05);
+      text-align:left;
+    }
+    .panel h3{ margin:0 0 10px; font-size:20px }
+    .panel .list{ margin:0; padding-left:18px; color:var(--muted) }
+    .panel .list li{ margin:6px 0 }
+
+    footer{ text-align:center; color:var(--muted); padding:40px 0 60px }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px; margin-bottom:12px; padding:6px 10px; border-radius:999px;
+      background:rgba(98,142,255,.08); border:1px solid rgba(129,150,255,.18); color:#cfe0ff; font-weight:700;
+      user-select:none;
+    }
+
+    @media (max-width: 780px){
+      .hero h2{ font-size:40px }
+      .brand h1{ display:none } /* na mobilu necháme jen power */
+      .head-right{ gap:8px }
+    }
+
+    /* RTL podpora pro arabštinu */
+    [dir="rtl"] body, [dir="rtl"] .notice, [dir="rtl"] .btns, [dir="rtl"] .hero, [dir="rtl"] header{ direction:rtl }
+    [dir="rtl"] .lang{ flex-direction: row-reverse }
+  </style>
+</head>
+<body>
+  <div class="waves"></div>
+
+  <header>
+    <a class="brand" href="#">
+      <div class="power" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+          <path d="M12 3v8" stroke="currentColor"/>
+          <path d="M6.35 6.35a7.5 7.5 0 1 0 11.3 0" stroke="currentColor" opacity=".85"/>
+        </svg>
+      </div>
+      <h1>ON <span class="muted">PROTOCOL</span></h1>
+    </a>
+
+    <div class="head-right">
+      <!-- socials (doplníš své odkazy do href) -->
+      <nav class="socials" aria-label="Social links">
+        <a class="social" id="x_link" href="#" target="_blank" rel="noopener" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h4.7l5 6.8 5.9-6.8H21l-7 8.2 7 9.8h-4.7l-5.4-7.5-6.5 7.5H3l7.6-8.8L3 3z" fill="currentColor"/></svg>
+        </a>
+        <a class="social" id="tg_link" href="#" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.3 3.7 11.6c-1 .4-1 1.8.1 2.1l4.5 1.4 1.7 5c.2.7 1.1.8 1.5.3l2.5-2.6 4.6 3.4c.6.4 1.4.1 1.6-.6l3-14.6c.2-.9-.7-1.6-1.7-1.2zM9.2 17.9l.5-3.2 7.7-7.3-9.5 6.3" fill="currentColor"/></svg>
+        </a>
+      </nav>
+
+      <!-- language -->
+      <div class="lang" id="lang">
+        <button id="langBtn"><span id="langCode" class="code">CZ</span></button>
+        <div class="lang-list" id="langList">
+          <div class="lang-item" data-code="cz"><span class="flag">🇨🇿</span> Čeština (cz)</div>
+          <div class="lang-item" data-code="sk"><span class="flag">🇸🇰</span> Slovenčina (sk)</div>
+          <div class="lang-item" data-code="en"><span class="flag">🇬🇧</span> English (en)</div>
+          <div class="lang-item" data-code="es"><span class="flag">🇪🇸</span> Español (es)</div>
+          <div class="lang-item" data-code="ru"><span class="flag">🇷🇺</span> Русский (ru)</div>
+          <div class="lang-item" data-code="ar"><span class="flag">🇸🇦</span> العربية (ar)</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2 id="t_title">ON PROTOCOL</h2>
+      <p id="t_sub">Propojujeme data, lidi & protokoly.</p>
+
+      <div class="btns">
+        <a href="https://onprotocol.app" class="btn" id="t_btn_enter" target="_blank" rel="noopener">Vstoupit do platformy</a>
+        <a href="#" class="btn" id="t_btn_buy">$ON koupit</a>
+        <a href="#token" class="btn" id="t_btn_about">O tokenu</a>
+      </div>
+    </section>
+
+    <!-- info box: Platforma ve výstavbě -->
+    <section class="notice" id="token">
+      <h3 id="t_building_title">Platforma ve výstavbě 🎊</h3>
+      <p id="t_building_text">
+        Na platformě ON PROTOCOL právě probíhají práce. Brzy spustíme plnou funkcionalitu s připojením peněženky, přehledem tokenů a dashboardem.
+      </p>
+    </section>
+
+    <!-- ETHICAL CORE -->
+    <section class="panel" id="ethics">
+      <h3 id="t_ethics_title">Etické jádro ON PROTOCOL</h3>
+      <ul class="list">
+        <li id="t_ethics_1">ON PROTOCOL je férová, transparentní brána pro tvůrce i držitele.</li>
+        <li id="t_ethics_2">Neopatrováme cizí prostředky. Uživatelé mají vždy kontrolu nad svými peněženkami.</li>
+        <li id="t_ethics_3">Žádné skryté poplatky. Všechny sazby uvádíme veřejně.</li>
+        <li id="t_ethics_4">Anti-rug ochrana: automatické kontroly rizik, štítky a podpora uzamčení likvidity.</li>
+        <li id="t_ethics_5">Otevřená komunikace a možnost nahlásit zneužití.</li>
+      </ul>
+    </section>
+
+    <!-- CREATOR COMMS PRINCIPLES -->
+    <section class="panel" id="communication">
+      <h3 id="t_comm_title">Zásady komunikace s tvůrci</h3>
+      <ul class="list">
+        <li id="t_comm_1">Odpovídáme veřejně a slušně. Nikdy nevyžadujeme posílat prostředky v soukromých zprávách.</li>
+        <li id="t_comm_2">„Verified“ tvůrce = dobrovolné ověření a vyšší důvěra i viditelnost.</li>
+        <li id="t_comm_3">Upozornění na riziko vždy doprovodíme vysvětlením a návodem, jak problém opravit.</li>
+        <li id="t_comm_4">Nulová tolerance podvodu: blokace a varování komunity.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <div class="badge" id="t_badge">Transparency & Safety</div>
+      <div>© <span id="year"></span> ON PROTOCOL</div>
+    </footer>
+  </main>
+
+  <script>
+    const $ = (s)=>document.querySelector(s);
+    const el = {
+      code: $('#langCode'),
+      btn:  $('#langBtn'),
+      wrap: $('#lang'),
+      list: $('#langList'),
+      title: $('#t_title'),
+      sub:   $('#t_sub'),
+      btnEnter: $('#t_btn_enter'),
+      btnBuy:   $('#t_btn_buy'),
+      btnAbout: $('#t_btn_about'),
+      bTitle: $('#t_building_title'),
+      bText:  $('#t_building_text'),
+      badge:  $('#t_badge')
+    };
+
+    const tr = {
+      cz: {
+        title: 'ON PROTOCOL',
+        sub: 'Propojujeme data, lidi & protokoly.',
+        btn_enter: 'Vstoupit do platformy',
+        btn_buy: 'Koupit $ON',
+        btn_about: 'O tokenu',
+        building_title: 'Platforma ve výstavbě 🎊',
+        building_text: 'Na platformě ON PROTOCOL právě probíhají práce. Brzy spustíme plnou funkcionalitu s připojením peněženky, přehledem tokenů a dashboardem.',
+        badge: 'Transparentnost & Bezpečí',
+
+        ethics_title: 'Etické jádro ON PROTOCOL',
+        ethics_1: 'ON PROTOCOL je férová, transparentní brána pro tvůrce i držitele.',
+        ethics_2: 'Neopatrováme cizí prostředky. Uživatelé mají vždy kontrolu nad svými peněženkami.',
+        ethics_3: 'Žádné skryté poplatky. Všechny sazby uvádíme veřejně.',
+        ethics_4: 'Anti-rug ochrana: automatické kontroly rizik, štítky a podpora uzamčení likvidity.',
+        ethics_5: 'Otevřená komunikace a možnost nahlásit zneužití.',
+
+        comm_title: 'Zásady komunikace s tvůrci',
+        comm_1: 'Odpovídáme veřejně a slušně. Nikdy nevyžadujeme posílat prostředky v soukromých zprávách.',
+        comm_2: '„Verified“ tvůrce = dobrovolné ověření a vyšší důvěra i viditelnost.',
+        comm_3: 'Upozornění na riziko vždy doprovodíme vysvětlením a návodem, jak problém opravit.',
+        comm_4: 'Nulová tolerance podvodu: blokace a varování komunity.'
+      },
+      sk: {
+        title: 'ON PROTOCOL',
+        sub: 'Prepájame dáta, ľudí & protokoly.',
+        btn_enter: 'Vstúpiť do platformy',
+        btn_buy: 'Kúpiť $ON',
+        btn_about: 'O tokene',
+        building_title: 'Platforma vo výstavbe 🎊',
+        building_text: 'Na platforme ON PROTOCOL práve prebiehajú práce. Čoskoro spustíme plnú funkcionalitu s peňaženkou, prehľadom tokenov a dashboardom.',
+        badge: 'Transparentnosť & Bezpečie',
+
+        ethics_title: 'Etické jadro ON PROTOCOL',
+        ethics_1: 'ON PROTOCOL je férová a transparentná brána pre tvorcov aj držiteľov.',
+        ethics_2: 'Nespravujeme cudzie prostriedky. Používatelia majú vždy kontrolu nad peňaženkami.',
+        ethics_3: 'Žiadne skryté poplatky. Všetky sadzby uvádzame verejne.',
+        ethics_4: 'Anti-rug ochrana: automatické kontroly rizík, štítky a podpora zamknutia likvidity.',
+        ethics_5: 'Otvorená komunikácia a možnosť nahlásiť zneužitie.',
+
+        comm_title: 'Zásady komunikácie s tvorcami',
+        comm_1: 'Odpovedáme verejne a slušne. Nikdy nežiadajme posielať prostriedky v súkromných správach.',
+        comm_2: '„Verified“ tvorca = dobrovoľné overenie a vyššia dôvera aj viditeľnosť.',
+        comm_3: 'Upozornenie na riziko vždy doplníme vysvetlením a návodom na opravu.',
+        comm_4: 'Nulová tolerancia podvodu: blokácia a varovanie komunity.'
+      },
+      en: {
+        title: 'ON PROTOCOL',
+        sub: 'Connecting data, people & protocols.',
+        btn_enter: 'Enter the Platform',
+        btn_buy: 'Buy $ON',
+        btn_about: 'About the Token',
+        building_title: 'Platform under construction 🎊',
+        building_text: 'Work is in progress. Full functionality with wallet connect, token overview and dashboard is coming soon.',
+        badge: 'Transparency & Safety',
+
+        ethics_title: 'Ethical Core of ON PROTOCOL',
+        ethics_1: 'ON PROTOCOL is a fair, transparent gateway for creators and holders.',
+        ethics_2: 'We never custody user funds. You always control your own wallet.',
+        ethics_3: 'No hidden fees. All rates are publicly disclosed.',
+        ethics_4: 'Anti-rug protection: automated risk checks, labeling, and liquidity-lock support.',
+        ethics_5: 'Open communication and a clear abuse-report channel.',
+
+        comm_title: 'Creator Communication Principles',
+        comm_1: 'We reply publicly and respectfully. We never ask for funds in private DMs.',
+        comm_2: '“Verified” creators get optional verification for higher trust and visibility.',
+        comm_3: 'Risk flags always come with an explanation and a fix guide.',
+        comm_4: 'Zero tolerance for fraud: blocking and warning the community.'
+      },
+      es: {
+        title: 'ON PROTOCOL',
+        sub: 'Conectamos datos, personas y protocolos.',
+        btn_enter: 'Entrar a la plataforma',
+        btn_buy: 'Comprar $ON',
+        btn_about: 'Sobre el token',
+        building_title: 'Plataforma en construcción 🎊',
+        building_text: 'Estamos trabajando. Pronto lanzaremos la funcionalidad completa con wallet, vista de tokens y panel.',
+        badge: 'Transparencia y Seguridad',
+
+        ethics_title: 'Núcleo ético de ON PROTOCOL',
+        ethics_1: 'ON PROTOCOL es una puerta de entrada justa y transparente para creadores y holders.',
+        ethics_2: 'Nunca custodiamos fondos de usuarios. Siempre controlas tu propia wallet.',
+        ethics_3: 'Sin comisiones ocultas. Todas las tarifas se publican.',
+        ethics_4: 'Protección anti-rug: controles automáticos de riesgo, etiquetas y apoyo al bloqueo de liquidez.',
+        ethics_5: 'Comunicación abierta y canal claro para reportes.',
+
+        comm_title: 'Principios de comunicación con creadores',
+        comm_1: 'Respondemos públicamente y con respeto. Nunca pedimos fondos por mensajes privados.',
+        comm_2: 'Creadores “verificados” obtienen confianza y visibilidad adicionales.',
+        comm_3: 'Las alertas de riesgo incluyen explicación y guía de solución.',
+        comm_4: 'Tolerancia cero al fraude: bloqueo y aviso a la comunidad.'
+      },
+      ru: {
+        title: 'ON PROTOCOL',
+        sub: 'Соединяем данные, людей и протоколы.',
+        btn_enter: 'Войти на платформу',
+        btn_buy: 'Купить $ON',
+        btn_about: 'О токене',
+        building_title: 'Платформа в разработке 🎊',
+        building_text: 'Мы ведем работы. Скоро будет кошелек, обзор токенов и дашборд.',
+        badge: 'Прозрачность и безопасность',
+
+        ethics_title: 'Этическая основа ON PROTOCOL',
+        ethics_1: 'ON PROTOCOL — честный и прозрачный вход для создателей и держателей.',
+        ethics_2: 'Мы не храним средства пользователей. Кошелёк всегда под вашим контролем.',
+        ethics_3: 'Без скрытых комиссий. Все ставки публикуются открыто.',
+        ethics_4: 'Защита от rug-pull: автоматические проверки рисков, метки и поддержка блокировки ликвидности.',
+        ethics_5: 'Открытая коммуникация и понятный канал для жалоб.',
+
+        comm_title: 'Принципы общения с создателями',
+        comm_1: 'Отвечаем публично и уважительно. Никогда не просим деньги в личных сообщениях.',
+        comm_2: '«Проверенный» создатель — добровольная верификация для большего доверия и видимости.',
+        comm_3: 'Флаги риска всегда сопровождаем объяснением и инструкцией по исправлению.',
+        comm_4: 'Нулевая толерантность к мошенничеству: блокировка и предупреждение сообщества.'
+      },
+      ar: {
+        title: '‏ON PROTOCOL',
+        sub: 'نربط البيانات والأشخاص والبروتوكولات.',
+        btn_enter: 'الدخول إلى المنصّة',
+        btn_buy: 'شراء ‏$ON',
+        btn_about: 'حول الرمز',
+        building_title: 'المنصّة قيد الإنشاء 🎊',
+        building_text: 'يتم العمل حاليًا. قريبًا سنطلق جميع الميزات مع ربط المحفظة وملخص الرموز ولوحة التحكم.',
+        badge: 'الشفافية والأمان',
+
+        ethics_title: 'الأساس الأخلاقي لـ ON PROTOCOL',
+        ethics_1: 'ON PROTOCOL بوابة عادلة وشفافة للمُنشئين والحاملين.',
+        ethics_2: 'لا نحتفظ بأموال المستخدمين. أنت تتحكم بمحفظتك دائمًا.',
+        ethics_3: 'لا رسوم مخفية. جميع الرسوم مُعلنة علنًا.',
+        ethics_4: 'حماية ضد الـrug: فحوصات تلقائية للمخاطر وتصنيفات ودعم قفل السيولة.',
+        ethics_5: 'تواصل مفتوح وقناة واضحة للإبلاغ.',
+
+        comm_title: 'مبادئ التواصل مع المُنشئين',
+        comm_1: 'نُجيب علنًا وباحترام. لا نطلب أموالًا عبر الرسائل الخاصة.',
+        comm_2: 'التحقق للمُنشئ اختياري ويزيد الثقة والظهور.',
+        comm_3: 'علامات الخطر تُرفق دائمًا بتفسير وطريقة للحل.',
+        comm_4: 'عدم التسامح مع الاحتيال: حظر وتحذير المجتمع.'
+      }
+    };
+
+    const setLang = (code)=>{
+      const dict = tr[code] || tr.cz;
+      el.code.textContent = code.toUpperCase();
+      el.title.textContent = dict.title;
+      el.sub.textContent = dict.sub;
+      el.btnEnter.textContent = dict.btn_enter;
+      el.btnBuy.textContent = dict.btn_buy;
+      el.btnAbout.textContent = dict.btn_about;
+      el.bTitle.textContent = dict.building_title;
+      el.bText.textContent  = dict.building_text;
+      el.badge.textContent  = dict.badge;
+
+      // nové texty (etické jádro + zásady komunikace)
+      document.getElementById('t_ethics_title').textContent = dict.ethics_title;
+      ['1','2','3','4','5'].forEach(i=>{
+        document.getElementById('t_ethics_'+i).textContent = dict['ethics_'+i];
+      });
+      document.getElementById('t_comm_title').textContent = dict.comm_title;
+      ['1','2','3','4'].forEach(i=>{
+        document.getElementById('t_comm_'+i).textContent = dict['comm_'+i];
+      });
+
+      // RTL jen pro arabštinu
+      document.documentElement.setAttribute('lang', code);
+      document.documentElement.setAttribute('dir', code === 'ar' ? 'rtl' : 'ltr');
+
+      localStorage.setItem('onp_lang', code);
+    };
+
+    // toggle list
+    el.btn.addEventListener('click', ()=> el.wrap.classList.toggle('open'));
+    document.addEventListener('click', (e)=>{
+      if(!el.wrap.contains(e.target)) el.wrap.classList.remove('open');
+    });
+    el.list.querySelectorAll('.lang-item').forEach(it=>{
+      it.addEventListener('click', ()=>{
+        setLang(it.dataset.code);
+        el.wrap.classList.remove('open');
+      });
+    });
+
+    // init
+    const stored = localStorage.getItem('onp_lang');
+    const browser = (navigator.language || 'cs').slice(0,2);
+    const initial = stored || (['cs','sk','en','es','ru','ar'].includes(browser) ? (browser==='cs'?'cz':browser) : 'en');
+    setLang(initial);
+
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // TODO: až založíš účty, doplň sem odkazy
+    // document.getElementById('x_link').href = 'https://x.com/TVUJ_HANDLE';
+    // document.getElementById('tg_link').href = 'https://t.me/TVUJ_KANAL_NEBO_SKUPINA';
+  </script>
+</body>
+</html>
