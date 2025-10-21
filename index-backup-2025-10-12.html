@@ -5,8 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ON PROTOCOL — landing</title>
   <meta name="description" content="ON PROTOCOL — transparentní launch ekosystému na Solaně." />
-  <link rel="icon" href="favicon.ico" />
+  
+  <link rel="manifest" href="manifest.json?v=4">
+  <link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b1220">
+  
   <style>
+  /* --- A2HS banner --- */
+  .a2hs-wrap{position:fixed;left:0;right:0;bottom:16px;display:none;z-index:9999}
+  .a2hs-card{max-width:640px;margin:0 auto;padding:12px 14px;border-radius:16px;
+    background:#121a27cc; backdrop-filter: blur(8px); border:1px solid #233045;
+    box-shadow:0 12px 40px rgba(0,0,0,.35); color:#e9f0ff; display:flex; gap:12px; align-items:center}
+  .a2hs-card img{width:36px;height:36px;border-radius:10px}
+  .a2hs-cta{margin-left:auto;display:flex;gap:8px}
+  .a2hs-btn{padding:8px 12px;border-radius:12px;border:1px solid #2f3f5c;background:#0f1726;
+    color:#e9f0ff;cursor:pointer}
+  .a2hs-btn.primary{background:#1b5cff;border-color:#1b5cff}
+  .a2hs-wrap.show{display:block}
+
+  /* iOS help modal */
+  .ios-help{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:10000}
+  .ios-help .box{max-width:520px;margin:10vh auto;background:#0f1726;border:1px solid #233045;
+    color:#e9f0ff;border-radius:16px;padding:18px 20px}
+  .ios-help h3{margin:0 0 8px 0}
+  .ios-help ol{margin:12px 0 0 18px}
+  .ios-help .close{margin-top:14px}
+
     :root{
       --bg:#0b1220;
       --bg2:#0d1426;
@@ -154,6 +181,23 @@
     [dir="rtl"] body, [dir="rtl"] .notice, [dir="rtl"] .btns, [dir="rtl"] .hero, [dir="rtl"] header{ direction:rtl }
     [dir="rtl"] .lang{ flex-direction: row-reverse }
   </style>
+  <!-- 🔒 SECURITY HEADERS -->
+<meta http-equiv="Content-Security-Policy" content="
+  content="default-src 'self'; 
+           img-src 'self' data: https:; 
+           script-src 'self'; 
+           style-src 'self' 'unsafe-inline'; 
+           connect-src 'self' https:; 
+           font-src 'self' data:;">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+<meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+<meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin">
+<meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+<!-- ✅ END SECURITY HEADERS -->
+
 </head>
 <body>
   <div class="waves"></div>
@@ -175,8 +219,16 @@
         <a class="social" id="x_link" href="#" target="_blank" rel="noopener" aria-label="X (Twitter)">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h4.7l5 6.8 5.9-6.8H21l-7 8.2 7 9.8h-4.7l-5.4-7.5-6.5 7.5H3l7.6-8.8L3 3z" fill="currentColor"/></svg>
         </a>
-        <a class="social" id="tg_link" href="#" target="_blank" rel="noopener" aria-label="Telegram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.3 3.7 11.6c-1 .4-1 1.8.1 2.1l4.5 1.4 1.7 5c.2.7 1.1.8 1.5.3l2.5-2.6 4.6 3.4c.6.4 1.4.1 1.6-.6l3-14.6c.2-.9-.7-1.6-1.7-1.2zM9.2 17.9l.5-3.2 7.7-7.3-9.5 6.3" fill="currentColor"/></svg>
+        <a class="social" id="tg_link" href="https://t.me/onprotocolcz" target="_blank" rel="noopener" aria-label="Telegram">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M21.5 4.3 3.7 11.6c-1 .4-1 1.8.1 2.1l4.5 1.4 1.7 5c.2.7 1.1.8 1.5.3l2.5-2.6 4.6 3.4c.6.4 1.4.1 1.6-.6l3-14.6c.2-.9-.7-1.6-1.7-1.2zM9.2 17.9l.5-3.2 7.7-7.3-9.5 6.3" fill="currentColor"/>
+  </svg>
+</a>
+        <!-- NEW: Facebook -->
+        <a class="social" id="fb_link" href="#" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H8.28v-2.91h2.16V9.41c0-2.14 1.27-3.32 3.22-3.32.93 0 1.91.17 1.91.17v2.1h-1.08c-1.07 0-1.41.66-1.41 1.34v1.61h2.4l-.38 2.91h-2.02V22c4.78-.79 8.44-4.94 8.44-9.94Z" fill="currentColor"/>
+          </svg>
         </a>
       </nav>
 
@@ -220,7 +272,7 @@
       <h3 id="t_ethics_title">Etické jádro ON PROTOCOL</h3>
       <ul class="list">
         <li id="t_ethics_1">ON PROTOCOL je férová, transparentní brána pro tvůrce i držitele.</li>
-        <li id="t_ethics_2">Neopatrováme cizí prostředky. Uživatelé mají vždy kontrolu nad svými peněženkami.</li>
+        <li id="t_ethics_2">Nespravujeme cizí prostředky. Uživatelé mají vždy kontrolu nad svými peněženkami.</li>
         <li id="t_ethics_3">Žádné skryté poplatky. Všechny sazby uvádíme veřejně.</li>
         <li id="t_ethics_4">Anti-rug ochrana: automatické kontroly rizik, štítky a podpora uzamčení likvidity.</li>
         <li id="t_ethics_5">Otevřená komunikace a možnost nahlásit zneužití.</li>
@@ -274,7 +326,7 @@
 
         ethics_title: 'Etické jádro ON PROTOCOL',
         ethics_1: 'ON PROTOCOL je férová, transparentní brána pro tvůrce i držitele.',
-        ethics_2: 'Neopatrováme cizí prostředky. Uživatelé mají vždy kontrolu nad svými peněženkami.',
+        ethics_2: 'Nespravujeme cizí prostředky. Uživatelé mají vždy kontrolu nad svými peněženkami.',
         ethics_3: 'Žádné skryté poplatky. Všechny sazby uvádíme veřejně.',
         ethics_4: 'Anti-rug ochrana: automatické kontroly rizik, štítky a podpora uzamčení likvidity.',
         ethics_5: 'Otevřená komunikace a možnost nahlásit zneužití.',
@@ -455,6 +507,103 @@
     // TODO: až založíš účty, doplň sem odkazy
     // document.getElementById('x_link').href = 'https://x.com/TVUJ_HANDLE';
     // document.getElementById('tg_link').href = 'https://t.me/TVUJ_KANAL_NEBO_SKUPINA';
+    // document.getElementById('fb_link').href = 'https://facebook.com/TVOJE_STRANKA';
   </script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then(() => console.log('✅ Service Worker registered'))
+        .catch(err => console.log('❌ Service Worker error:', err));
+    });
+  }
+</script>
+<!-- A2HS banner -->
+<div id="a2hs" class="a2hs-wrap" aria-live="polite">
+  <div class="a2hs-card">
+    <img src="icon-192.png" alt="ON Protocol">
+    <div>
+      <div style="font-weight:600">Přidat ON PROTOCOL na plochu</div>
+      <div style="font-size:12px;opacity:.8">Spouštěj jako aplikaci jedním klepnutím.</div>
+    </div>
+    <div class="a2hs-cta">
+      <button id="a2hs-later" class="a2hs-btn">Později</button>
+      <button id="a2hs-add" class="a2hs-btn primary">Přidat</button>
+    </div>
+  </div>
+</div>
+
+<!-- iOS pomoc -->
+<div id="ios-help" class="ios-help" role="dialog" aria-modal="true" aria-label="Přidání na plochu">
+  <div class="box">
+    <h3>Přidat na plochu na iPhonu</h3>
+    <ol>
+      <li>Klepni na <strong>sdílecí ikonu</strong> (čtverec se šipkou nahoru) v Safari.</li>
+      <li>Zvol <strong>Přidat na plochu</strong>.</li>
+      <li>Potvrď název a klepni na <strong>Přidat</strong>.</li>
+    </ol>
+    <button id="ios-close" class="a2hs-btn close">Hotovo</button>
+  </div>
+</div>
+<script>
+  (function(){
+    const banner = document.getElementById('a2hs');
+    const btnAdd = document.getElementById('a2hs-add');
+    const btnLater = document.getElementById('a2hs-later');
+    const iosHelp = document.getElementById('ios-help');
+    const iosClose = document.getElementById('ios-close');
+
+    let deferredPrompt = null;
+    const KEY_DISMISS = 'onp_a2hs_dismissed';
+
+    const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = () =>
+      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+      (window.navigator.standalone === true);
+
+    function showBannerOnce(){
+      if (isStandalone()) return;
+      if (localStorage.getItem(KEY_DISMISS)==='1') return;
+      banner.classList.add('show');
+    }
+    function hideBanner(setDismiss){
+      banner.classList.remove('show');
+      if (setDismiss) localStorage.setItem(KEY_DISMISS, '1');
+    }
+
+    // Chrome/Edge/Android
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setTimeout(showBannerOnce, 1200);
+    });
+
+    // Přidat
+    btnAdd.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        hideBanner(true);
+        console.log('A2HS outcome:', choice.outcome);
+      } else if (isIOS()) {
+        iosHelp.style.display = 'block';
+      } else {
+        hideBanner(true);
+      }
+    });
+
+    // Později
+    btnLater.addEventListener('click', () => hideBanner(true));
+    iosClose.addEventListener('click', () => iosHelp.style.display = 'none');
+
+    // Instalace hotova
+    window.addEventListener('appinstalled', () => hideBanner(true));
+
+    // iOS fallback
+    if (isIOS() && !isStandalone()) setTimeout(showBannerOnce, 1500);
+  })();
+</script>
 </body>
 </html>
