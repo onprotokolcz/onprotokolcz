@@ -333,6 +333,8 @@
       bText:  $('#t_building_text'),
       badge:  $('#t_badge')
     };
+    // Kam uživatele pošleme po kliknutí na „Vstoupit do platformy“
+const PLATFORM_URL = "https://onprotocol.app"; // kdyžtak změň na finální doménu
 
     const tr = {
       cz: {
@@ -481,6 +483,7 @@
       el.title.textContent = dict.title;
       el.sub.textContent = dict.sub;
       el.btnEnter.textContent = dict.btn_enter;
+      el.btnEnter.href = PLATFORM_URL + "?lang=" + code;
       el.btnBuy.textContent = dict.btn_buy;
       el.btnAbout.textContent = dict.btn_about;
       el.bTitle.textContent = dict.building_title;
