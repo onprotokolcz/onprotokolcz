@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="cs">
+<html lang="cz">
+
+</html>
 
 <head>
   <meta charset="utf-8" />
@@ -592,6 +594,18 @@
 
   <script>
     const $ = (s) => document.querySelector(s);
+    const LANG_KEY = "on:lang";
+    const normalizeLang = (l) => {
+      if (!l) return "en";
+      l = ("" + l).toLowerCase();
+      if (l.startsWith("cs") || l === "cz") return "cz";
+      if (l.startsWith("sk")) return "sk";
+      if (l.startsWith("en")) return "en";
+      if (l.startsWith("es")) return "es";
+      if (l.startsWith("ru")) return "ru";
+      if (l.startsWith("ar")) return "ar";
+      return "en";
+    };
     const el = {
       code: $('#langCode'),
       btn: $('#langBtn'),
@@ -614,7 +628,7 @@
 
       let lang = "cz";
       try {
-        lang = localStorage.getItem("on:lang") || lang;
+        lang = localStorage.getItem(LANG_KEY) || lang;
       } catch (e) { }
 
       const target = PLATFORM_URL + "/?lang=" + encodeURIComponent(lang);
@@ -789,7 +803,7 @@
       document.documentElement.setAttribute('lang', code);
       document.documentElement.setAttribute('dir', code === 'ar' ? 'rtl' : 'ltr');
 
-      localStorage.setItem('onp_lang', code);
+      localStorage.setItem(LANG_KEY, code);
     };
 
     // toggle list
@@ -805,7 +819,7 @@
     });
 
     // init
-    const stored = localStorage.getItem('onp_lang');
+    const stored = localStorage.getItem(LANG_KEY);
     const browser = (navigator.language || 'cs').slice(0, 2);
     const initial = stored || (['cs', 'sk', 'en', 'es', 'ru', 'ar'].includes(browser) ? (browser === 'cs' ? 'cz' : browser) : 'en');
     setLang(initial);
