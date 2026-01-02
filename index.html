@@ -477,7 +477,7 @@
   </style>
   <!-- 🔒 SECURITY HEADERS -->
   <meta http-equiv="Content-Security-Policy"
-  content="default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https:; font-src 'self' data:;">
+    content="default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https:; font-src 'self' data:;">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Frame-Options" content="DENY">
@@ -546,8 +546,7 @@
 
       <div class="btns">
         <a class="btn" id="t_btn_enter" href="#"></a>
-          Vstoupit do platformy
-        </a>
+
         <a href="#" class="btn" id="t_btn_buy">$ON koupit</a>
         <a href="#token" class="btn" id="t_btn_about">O tokenu</a>
       </div>
@@ -913,7 +912,7 @@
 
       // iOS fallback
       if (isIOS() && !isStandalone()) setTimeout(showBannerOnce, 1500);
-     
+
     })();
   </script>
 </body>
