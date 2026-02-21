@@ -928,6 +928,25 @@
 
       // iOS fallback
       if (isIOS() && !isStandalone()) setTimeout(showBannerOnce, 1500);
+      // =========================
+      // AUTH BUTTON (panáček)
+      // =========================
+      const authBtn = document.getElementById("authBtn");
+      if (authBtn) {
+        authBtn.addEventListener("click", () => {
+          const host = window.location.hostname;
+
+          // lokální dev: landing běží na :3000, app běží na :3002
+          const APP_ORIGIN =
+            (host === "localhost" || host === "127.0.0.1")
+              ? "http://localhost:3002"
+              : `http://${host}:3002`;
+
+          const isMobile = window.matchMedia && window.matchMedia("(max-width: 820px)").matches;
+          const path = isMobile ? "/mobile" : "/";
+          window.location.href = `${APP_ORIGIN}${path}?auth=1`;
+        });
+      }
 
     })();
   </script>
