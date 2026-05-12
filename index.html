@@ -936,15 +936,14 @@
         authBtn.addEventListener("click", () => {
           const host = window.location.hostname;
 
-          // lokální dev: landing běží na :3000, app běží na :3002
           const APP_ORIGIN =
             (host === "localhost" || host === "127.0.0.1")
               ? "http://localhost:3002"
               : `http://${host}:3002`;
 
           const isMobile = window.matchMedia && window.matchMedia("(max-width: 820px)").matches;
-          const path = isMobile ? "/mobile" : "/";
-          window.location.href = `${APP_ORIGIN}${path}?auth=1`;
+          const next = isMobile ? "/mobile" : "/";
+          window.location.href = `${APP_ORIGIN}/auth?next=${encodeURIComponent(next)}&forceLogin=1`;
         });
       }
 
